@@ -58,6 +58,7 @@ class Charset implements CharsetManager
         'utf-8'                    => 'UTF-8',
         'utf-7'                    => 'UTF-7',
         'shift_jis'                => 'Shift_JIS',
+        'ms950'                    => 'Big5',
         'big5'                     => 'Big5',
         'euc-jp'                   => 'EUC-JP',
         'euc-kr'                   => 'EUC-KR',
