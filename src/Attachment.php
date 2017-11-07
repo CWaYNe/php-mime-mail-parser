@@ -51,6 +51,19 @@ class Attachment
     protected $mimePartStr;
 
     /**
+     * NUMail Custom var
+     * @var int $eml_offset
+     */
+    protected $emlOffset;
+
+    /**
+     * NUMail Custom var
+     * @var int $raw_size
+     */
+    protected $rawSize;
+    
+
+    /**
      * Attachment constructor.
      *
      * @param string   $filename
@@ -68,7 +81,9 @@ class Attachment
         $contentDisposition = 'attachment',
         $contentId = '',
         $headers = [],
-        $mimePartStr = ''
+        $mimePartStr = '',
+        $emlOffset = 0,
+        $rawSize = 0
     ) {
         $this->filename = $filename;
         $this->contentType = $contentType;
@@ -78,6 +93,29 @@ class Attachment
         $this->contentId = $contentId;
         $this->headers = $headers;
         $this->mimePartStr = $mimePartStr;
+        $this->emlOffset = $emlOffset;
+        $this->rawSize = $rawSize;
+    }
+
+    /**
+     * retrieve the attachment offset
+     *
+     * @return int
+     */
+    public function getOffset()
+    {
+        return $this->emlOffset;
+    }
+
+    /**
+     * retrieve the attachment unencoded size
+     * ( ending-position - starting-position )
+     * 
+     * @return int
+     */
+    public function getSize()
+    {
+        return $this->rawSize;
     }
 
     /**

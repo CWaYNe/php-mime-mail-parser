@@ -505,6 +505,10 @@ class Parser
 
                 $mimePartStr = $this->getPartComplete($part);
 
+                $emlOffset = $this->getPart('starting-pos-body', $part);
+                $rawSize = $this->getPart('ending-pos-body', $part) - $emlOffset;
+
+
                 $attachments[] = new Attachment(
                     $filename,
                     $this->getPart('content-type', $part),
@@ -512,7 +516,9 @@ class Parser
                     $disposition,
                     $contentidAttachments,
                     $headersAttachments,
-                    $mimePartStr
+                    $mimePartStr,
+                    $emlOffset,
+                    $rawSize
                 );
             }
         }
