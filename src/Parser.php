@@ -681,31 +681,31 @@ class Parser
      */
     protected function decodeSingleHeader($input)
     {
-        // For each encoded-word...
-        while (preg_match('/(=\?([^?]+)\?(q|b)\?([^?]*)\?=)((\s+)=\?)?/i', $input, $matches)) {
-            $encoded = $matches[1];
-            $charset = $matches[2];
-            $encoding = $matches[3];
-            $text = $matches[4];
-            $space = isset($matches[6]) ? $matches[6] : '';
+		// Remove white space between encoded-words
+        $input = preg_replace('/(=\?[^?]+\?(q|b)\?[^?]*\?=)(\s)+=\?/i', '\1=?', $input);
+        
+		// For each encoded-word...
+		while (preg_match('/(=\?([^?]+)\?(q|b)\?([^?]*)\?=)/i', $input, $matches)) {
+			$encoded  = $matches[1];
+			$charset  = $matches[2];
+			$encoding = $matches[3];
+			$text     = $matches[4];
 
-            switch (strtolower($encoding)) {
-                case 'b':
+			switch (strtolower($encoding)) {
+				case 'b':
                     $text = $this->decodeContentTransfer($text, 'base64');
-                    break;
+					break;
 
-                case 'q':
-                    $text = str_replace('_', ' ', $text);
-                    preg_match_all('/=([a-f0-9]{2})/i', $text, $matches);
-                    foreach ($matches[1] as $value) {
-                        $text = str_replace('='.$value, chr(hexdec($value)), $text);
-                    }
-                    break;
+				case 'q':
+					$text = str_replace('_', ' ', $text);
+					preg_match_all('/=([a-f0-9]{2})/i', $text, $matches);
+					foreach($matches[1] as $value)
+						$text = str_replace('='.$value, chr(hexdec($value)), $text);
+					break;
             }
-
             $text = $this->charset->decodeCharset($text, $this->charset->getCharsetAlias($charset));
-            $input = str_replace($encoded . $space, $text, $input);
-        }
+			$input = str_replace($encoded, $text, $input);
+		}
 
         return $input;
     }
