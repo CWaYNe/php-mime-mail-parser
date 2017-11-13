@@ -309,6 +309,7 @@ class Charset implements CharsetManager
         'x-gbk'                    => 'gbk',
         'windows-936'              => 'gbk',
         'ansi-1251'                => 'windows-1251',
+        'gb2312'                   => 'gbk',
     ];
 
     /**
