@@ -720,6 +720,7 @@ class Parser
     protected function getPartCharset($part)
     {
         if (isset($part['charset'])) {
+	    $part['charset'] = str_replace("<br>", "", $part['charset']);
             return $this->charset->getCharsetAlias($part['charset']);
         } else {
             return false;
